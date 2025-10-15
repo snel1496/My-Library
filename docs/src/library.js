@@ -2,7 +2,7 @@
 var reader = new FileReader();
 var table = document.getElementById('library');
 
-reader.readAsText("./data/library.csv");
+reader.readAsText("../data/library.csv");
 reader.onloadend = () => {
     table.innerHTML = "";
     for (let row of CSV.parse(reader.result)) {
