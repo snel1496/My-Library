@@ -1,5 +1,4 @@
 var table = document.getElementById("library");
-console.log(table);
 fetch("../data/library.csv")
     .then(res => res.text())
     .then(csv => {
