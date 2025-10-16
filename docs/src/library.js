@@ -9,9 +9,9 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
         for (let i = 0; i < csvParsed.length; i++) {
             let tr = table.insertRow();
             if (i == 0) {
-                for (let j = 0; j < row.length; j++) {
-                    if (keepCols[row[j]]) {
-                        keepCols[row[j]] = j;
+                for (let j = 0; j < csvParsed[i].length; j++) {
+                    if (keepCols[csvParsed[i][j]]) {
+                        keepCols[csvParsed[i][j]] = j;
                         let td = tr.insertCell();
                         td.innerHTML = csvParsed[i][j];
                     }
