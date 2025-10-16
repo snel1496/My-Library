@@ -1,5 +1,5 @@
 var table = document.getElementById("library");
-fetch("../data/library.csv")
+fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/docs/data/library.csv")
     .then(res => res.text())
     .then(csv => {
         table.innerHTML = "";
