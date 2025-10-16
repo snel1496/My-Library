@@ -1,4 +1,4 @@
-var table = document.getElementById(library);
+var table = document.getElementById("library");
 var keepCols = { Title: -1, Subtitle: -1, Series: -1, Volume: -1, Author: -1, 'Date Published': -1, 'Original Date Published': -1, Edition: -1, Genre: -1, Summary: -1, 'Word Count': -1, 'Number of Pages': -1, ISBN: -1, 'Date Added': -1 }
 
 fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/docs/data/library.csv")
