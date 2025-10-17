@@ -8,6 +8,8 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
         let csvParsed = CSV.parse(csvRaw);
 
         let thead = table.createTHead();
+        thead.class = "thead-light";
+
         let tbody = table.createTBody();
         for (let i = 0; i < csvParsed.length; i++) {
             if (i == 0) {
