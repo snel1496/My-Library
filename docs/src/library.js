@@ -19,7 +19,8 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
                     }
                 }
             } else {
-                let tr = table.insertRow();
+                let tb = table.createTBody();
+                let tr = tb.insertRow();
                 let td = tr.insertCell();
                 td.innerHTML = `<img src="https://covers.openlibrary.org/b/isbn/${csvParsed[i][keepCols.ISBN]}-S.jpg" />`
                 for (const [_, value] of Object.entries(keepCols)) {
