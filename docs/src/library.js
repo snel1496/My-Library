@@ -7,10 +7,11 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
         table.innerHTML = "";
         let csvParsed = CSV.parse(csvRaw);
         for (let i = 0; i < csvParsed.length; i++) {
-            let tr = table.insertRow();
             if (i == 0) {
-                tr.insertCell(); // null first cell for spacing
-                for (let j = 0; j < csvParsed[i].length; j++) { // TODO change these to be headers
+                let th = table.createTHead();
+                let tr = th.insertRow();
+                tr.insertCell().innerHTML = "Image"; // add space for image
+                for (let j = 0; j < csvParsed[i].length; j++) { 
                     if (keepCols[csvParsed[i][j]]) {
                         keepCols[csvParsed[i][j]] = j;
                         let td = tr.insertCell();
@@ -18,6 +19,7 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
                     }
                 }
             } else {
+                let tr = table.insertRow();
                 let td = tr.insertCell();
                 td.innerHTML = `<img src="https://covers.openlibrary.org/b/isbn/${csvParsed[i][keepCols.ISBN]}-S.jpg" />`
                 for (const [_, value] of Object.entries(keepCols)) {
