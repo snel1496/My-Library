@@ -48,8 +48,7 @@ function filterColumnByString(filterString, filterColumnIdx) { // this could be 
 }
 
 function sortTableByColumn(columnIdx) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("mySortableTable");
+    var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     switching = true;
     dir = "asc"; // Set the initial sorting direction to ascending
 
