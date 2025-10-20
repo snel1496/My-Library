@@ -21,7 +21,7 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
                         keepCols[csvParsed[i][j]] = j;
                         let td = tr.insertCell();
                         td.innerHTML = csvParsed[i][j];
-                        td.onClick = "sortTableByColumn(j)";
+                        td.onclick = () => { `sortTableByColumn(${j})` };
                     }
                 }
             } else {
@@ -58,8 +58,8 @@ function sortTableByColumn(columnIdx) {
 
         for (i = 1; i < (rows.length - 1); i++) { // Loop through all rows except the header
             shouldSwitch = false;
-            x = rows[i].getElementsByTagName("TD")[n];
-            y = rows[i + 1].getElementsByTagName("TD")[n];
+            x = rows[i].getElementsByTagName("TD")[columnIdx];
+            y = rows[i + 1].getElementsByTagName("TD")[columnIdx];
 
             // Check if the two rows should switch place
             if (dir == "asc") {
