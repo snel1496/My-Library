@@ -1,5 +1,6 @@
 var table = document.getElementById("library");
-var keepCols = { Title: -1, Subtitle: -1, Series: -1, Volume: -1, Author: -1, 'Date Published': -1, 'Original Date Published': -1, Edition: -1, Genre: -1, 'Word Count': -1, 'Number of Pages': -1, ISBN: -1, 'Date Added': -1 }
+var keepCols = { Title: -1, Subtitle: -1, Series: -1, Volume: -1, Author: -1, 'Date Published': -1, 'Word Count': -1, Genre: -1, 'Number of Pages': -1, ISBN: -1, 'Date Added': -1 }
+var csvParsed;
 
 fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/docs/data/library.csv")
     .then(res => res.text())
@@ -20,6 +21,7 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
                         keepCols[csvParsed[i][j]] = j;
                         let td = tr.insertCell();
                         td.innerHTML = csvParsed[i][j];
+                        td.onclick = () => { sortTableByColumn(j) };
                     }
                 }
             } else {
@@ -33,3 +35,55 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
             }
         }
     });
+
+
+function filterColumnByString(filterString, filterColumnIdx) { // this could be rewritten to use 
+    let rows = table.tBodies[0].rows;
+    for (row of rows) {
+        row.style = "";
+        if (row.cells[filterColumnIdx].textContent != filterString) { // todo make this more than an exact match
+            row.style = "display: none";
+        }
+    }
+}
+
+function sortTableByColumn(columnIdx) {
+    var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    switching = true;
+    dir = "asc"; // Set the initial sorting direction to ascending
+
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+
+        for (i = 1; i < (rows.length - 1); i++) { // Loop through all rows except the header
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[columnIdx];
+            y = rows[i + 1].getElementsByTagName("TD")[columnIdx];
+
+            // Check if the two rows should switch place
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+        } else {
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
+}
