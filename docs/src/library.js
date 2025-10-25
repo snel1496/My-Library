@@ -29,7 +29,7 @@ function configDropDown(dropdownElement, dropdownSet, filterColumnIdx) {
         let commaPos = item?.search(",");
 
         let firstAuthor = commaPos == -1 ? item : item?.split(0, commaPos) // TODO expand to include more authors
-        dropdownElement.innerHTML = `${dropdownElement.innerHTML}<option value=${firstAuthor}>${firstAuthor}</option>`;
+        dropdownElement.innerHTML = `${dropdownElement.innerHTML}<option value="${firstAuthor}">${firstAuthor}</option>`;
     });
 }
 
@@ -120,8 +120,3 @@ function filterColumnByString(filterString, filterColumnIdx) { // this could be 
         }
     }
 }
-
-
-
-
-
