@@ -16,12 +16,11 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
             if (i == 0) {
                 let tr = thead.insertRow();
                 tr.insertCell().innerHTML = "Image"; // add space for image
-                for (let j = 0; j < csvParsed[i].length; j++) { 
+                for (let j = 0; j < csvParsed[i].length; j++) {
                     if (keepCols[csvParsed[i][j]]) {
                         keepCols[csvParsed[i][j]] = j;
                         let td = tr.insertCell();
-                        td.innerHTML = csvParsed[i][j];
-                        td.onclick = () => { sortTableByColumn(j) };
+                        td.innerHTML = `${csvParsed[i][j]}<button class="btn" onclick="sortTableByColumn(${j})"><i class="fa fa-sort"></i></button>`; // TODO do something to change the icon to fa-sort-down or fa-sort-up when appropriate
                     }
                 }
             } else {
@@ -35,17 +34,6 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
             }
         }
     });
-
-
-function filterColumnByString(filterString, filterColumnIdx) { // this could be rewritten to use 
-    let rows = table.tBodies[0].rows;
-    for (row of rows) {
-        row.style = "";
-        if (row.cells[filterColumnIdx].textContent != filterString) { // todo make this more than an exact match
-            row.style = "display: none";
-        }
-    }
-}
 
 function sortTableByColumn(columnIdx) {
     var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -87,3 +75,18 @@ function sortTableByColumn(columnIdx) {
         }
     }
 }
+
+function filterColumnByString(filterString, filterColumnIdx) { // this could be rewritten to use 
+    let rows = table.tBodies[0].rows;
+    for (row of rows) {
+        row.style = "";
+        if (row.cells[filterColumnIdx].textContent != filterString) { // todo make this more than an exact match
+            row.style = "display: none";
+        }
+    }
+}
+
+
+
+
+
