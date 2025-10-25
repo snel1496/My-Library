@@ -1,40 +1,73 @@
 var table = document.getElementById("library");
-var keepCols = { Title: -1, Subtitle: -1, Series: -1, Volume: -1, Author: -1, 'Date Published': -1, 'Word Count': -1, Genre: -1, 'Number of Pages': -1, ISBN: -1, 'Date Added': -1 }
-var csvParsed;
+var searchBox = document.getElementById("search-box");
+var seriesDropdown = document.getElementById("series-dropdown");
+var seriesSet = new Set();
+var authorDropdown = document.getElementById("author-dropdown");
+var authorSet = new Set();
 
-fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/docs/data/library.csv")
+var keepCols = { Title: -1, Subtitle: -1, Series: -1, Volume: -1, Author: -1, 'Date Published': -1, 'Word Count': -1, Genre: -1, 'Number of Pages': -1, ISBN: -1, 'Date Added': -1 }
+
+fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/docs/data/library.csv") // TODO this function should probably be split up
     .then(res => res.text())
     .then(csvRaw => {
         table.innerHTML = "";
         let csvParsed = CSV.parse(csvRaw);
+        configureTable(csvParsed);
+    })
+    .then(() => { onReady() });
 
-        let thead = table.createTHead();
-        thead.class = "thead-light";
+//Stuff to do after the data has been parsed and processed
+function onReady() {
+    fillDropDown(seriesDropdown, seriesSet);
+    fillDropDown(authorDropdown, authorSet);
+}
 
-        let tbody = table.createTBody();
-        for (let i = 0; i < csvParsed.length; i++) {
-            if (i == 0) {
-                let tr = thead.insertRow();
-                tr.insertCell().innerHTML = "Image"; // add space for image
-                for (let j = 0; j < csvParsed[i].length; j++) {
-                    if (keepCols[csvParsed[i][j]]) {
-                        keepCols[csvParsed[i][j]] = j;
-                        let td = tr.insertCell();
-                        td.innerHTML = `${csvParsed[i][j]}<button class="btn" onclick="sortTableByColumn(${j})"><i class="fa fa-sort"></i></button>`; // TODO do something to change the icon to fa-sort-down or fa-sort-up when appropriate
-                    }
-                }
-            } else {
-                let tr = tbody.insertRow();
-                let td = tr.insertCell();
-                td.innerHTML = `<img src="https://covers.openlibrary.org/b/isbn/${csvParsed[i][keepCols.ISBN]}-S.jpg" />`
-                for (const [_, value] of Object.entries(keepCols)) {
+function fillDropDown(dropdownElement, dropdownSet) {
+    dropdownElement.innerHTML = "";
+    console.log("Filling Dropdown", dropdownElement, "With Data", dropdownSet);
+    dropdownSet.forEach(item => {
+        dropdownElement.innerHTML = `${dropdownElement.innerHTML}<option value=${item}>${item}</option>`;
+        console.log(dropdownElement.innerHTML);
+    });
+}
+
+function configureTable(libraryData) {
+    let thead = table.createTHead();
+    thead.class = "thead-light";
+
+    let tbody = table.createTBody();
+    for (let i = 0; i < libraryData.length; i++) {
+        if (i == 0) {
+            let tr = thead.insertRow();
+            tr.insertCell().innerHTML = "Image"; // add space for image
+            for (let j = 0; j < libraryData[i].length; j++) {
+                if (keepCols[libraryData[i][j]]) {
+                    keepCols[libraryData[i][j]] = j;
                     let td = tr.insertCell();
-                    td.innerHTML = csvParsed[i][value];
+                    td.innerHTML = `${libraryData[i][j]}<button class="btn" onclick="sortTableByColumn(${j})"><i class="fa fa-sort"></i></button>`; // TODO do something to change the icon to fa-sort-down or fa-sort-up when appropriate, it also looks weird on the site
+                }
+            }
+        } else {
+            let tr = tbody.insertRow();
+            let td = tr.insertCell();
+            td.innerHTML = `<img src="https://covers.openlibrary.org/b/isbn/${libraryData[i][keepCols.ISBN]}-S.jpg" />`
+            for (const [_, idx] of Object.entries(keepCols)) {
+                let td = tr.insertCell();
+                td.innerHTML = libraryData[i][idx];
+                switch (idx) {
+                    case keepCols.Author:
+                        authorSet.add(libraryData[i][idx]);
+                        break;
+                    case keepCols.Series:
+                        seriesSet.add(libraryData[i][idx]);
+                        break;
+                    default:
+                        break;
                 }
             }
         }
-    });
-
+    }
+}
 function sortTableByColumn(columnIdx) {
     var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     switching = true;

@@ -10,23 +10,27 @@
     <link rel="stylesheet" href="/assets/css/style.css?v=b944cac3f0531ea66a88b750f861d130b213d2de">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./src/style.css">
+    <script defer src="./src/csv.min.js"></script>
+    <script defer src="./src/library.js"></script>
 </head>
 
 <body>
-    <h1>My Library</h1>
-    <a href="https://snel1496.github.io/library.html">Personal Library Docs</a>
 
-    <p>This is a current version of my library.</p>
-    <div>
-        <input type="search" name="Search" id="search">
+    <div id="header" class="container">
+        <h1>My Library</h1>
+        <a href="https://snel1496.github.io/library.html">Personal Library Docs</a>
+
+        <p>This is a current version of my library.</p> <!-- TODO auto insert last entry date of book here-->
+        <br /> Search: <input type="search" id="search-box"></input>
+        <br /> Series Select: <select id="series-dropdown"></select>
+        <br /> Author Select: <select id="author-dropdown"></select>
     </div>
-    <div id="library-container" class="mt-4 table-responsive">
+    <div id="library-container" class="m-4 table-responsive">
         <table id="library" class="table table-hovered table-bordered">
         </table>
     </div>
 </body>
 
-<script defer src="./src/csv.min.js"></script>
-<script src="./src/library.js"></script>
+
 
 </html>
