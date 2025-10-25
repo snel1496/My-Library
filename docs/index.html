@@ -21,9 +21,20 @@
         <a href="https://snel1496.github.io/library.html">Personal Library Docs</a>
 
         <p>This is a current version of my library.</p> <!-- TODO auto insert last entry date of book here-->
-        <br /> Search: <input type="search" id="search-box"></input>
-        <br /> Series Select: <select id="series-dropdown"></select>
-        <br /> Author Select: <select id="author-dropdown"></select>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="search-box">Search:</span>
+            </div>
+            <input type="search" id="search-box"></input>
+        </div>
+        <div class="input-group">
+            <select id="series-dropdown" class="custom-select"></select>
+            <select id="author-dropdown" class="custom-select"></select>
+        </div>
+        <div>
+
+        </div>
+    </div>
     </div>
     <div id="library-container" class="m-4 table-responsive">
         <table id="library" class="table table-hovered table-bordered">

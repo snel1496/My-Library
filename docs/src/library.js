@@ -18,16 +18,18 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
 
 //Stuff to do after the data has been parsed and processed
 function onReady() {
-    fillDropDown(seriesDropdown, seriesSet);
-    fillDropDown(authorDropdown, authorSet);
+    configDropDown(seriesDropdown, seriesSet, keepCols.Series);
+    configDropDown(authorDropdown, authorSet, keepCols.Author);
 }
 
-function fillDropDown(dropdownElement, dropdownSet) {
+function configDropDown(dropdownElement, dropdownSet, filterColumnIdx) {
     dropdownElement.innerHTML = "";
-    console.log("Filling Dropdown", dropdownElement, "With Data", dropdownSet);
+    dropdownElement.addEventListener('change', () => { filterColumnByString(dropdownElement.value, filterColumnIdx) })
     dropdownSet.forEach(item => {
-        dropdownElement.innerHTML = `${dropdownElement.innerHTML}<option value=${item}>${item}</option>`;
-        console.log(dropdownElement.innerHTML);
+        let commaPos = item?.search(",");
+
+        let firstAuthor = commaPos == -1 ? item : item?.split(0, commaPos) // TODO expand to include more authors
+        dropdownElement.innerHTML = `${dropdownElement.innerHTML}<option value=${firstAuthor}>${firstAuthor}</option>`;
     });
 }
 
@@ -109,11 +111,11 @@ function sortTableByColumn(columnIdx) {
     }
 }
 
-function filterColumnByString(filterString, filterColumnIdx) { // this could be rewritten to use 
+function filterColumnByString(filterString, filterColumnIdx) { // this could be rewritten to use the background data instead of just making things invisible
     let rows = table.tBodies[0].rows;
     for (row of rows) {
         row.style = "";
-        if (row.cells[filterColumnIdx].textContent != filterString) { // todo make this more than an exact match
+        if (filterString != "undefined" && row.cells[filterColumnIdx].textContent != filterString) { // todo make this more than an exact match it also doesnt work when things have spaces?
             row.style = "display: none";
         }
     }
