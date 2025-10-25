@@ -26,10 +26,23 @@ function configDropDown(dropdownElement, dropdownSet, filterColumnIdx) {
     dropdownElement.innerHTML = "";
     dropdownElement.addEventListener('change', () => { filterColumnByString(dropdownElement.value, filterColumnIdx) })
     dropdownSet.forEach(item => {
-        let commaPos = item?.search(",");
+        if (item == null || item == undefined) {
+            dropdownElement.innerHTML = `${dropdownElement.innerHTML}<option value="undefined">undefined</option>`;
+            return;
+        }
 
-        let firstAuthor = commaPos == -1 ? item : item?.split(0, commaPos) // TODO expand to include more authors
-        dropdownElement.innerHTML = `${dropdownElement.innerHTML}<option value="${firstAuthor}">${firstAuthor}</option>`;
+        let itemList = item?.split(",");
+        let entry = [];
+        itemList.every((value, index) => {
+            if (index == 3) {
+                entry.push("et. al.");
+                return false;
+            }
+            entry.push(value);
+            return true;
+        });
+        let res = entry.join();
+        dropdownElement.innerHTML = `${dropdownElement.innerHTML}<option value="${res}">${res}</option>`;
     });
 }
 
