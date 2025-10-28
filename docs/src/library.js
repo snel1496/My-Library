@@ -16,15 +16,17 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
     })
     .then(() => { onReady() });
 
+// configure MiniSearch https://github.com/lucaong/minisearch
 //Stuff to do after the data has been parsed and processed
 function onReady() {
     configDropDown(seriesDropdown, seriesSet, keepCols.Series);
     configDropDown(authorDropdown, authorSet, keepCols.Author);
+    searchBox.addEventListener('input', () => filterColumnByString(searchBox.value, keepCols.Title));
 }
 
 function configDropDown(dropdownElement, dropdownSet, filterColumnIdx) {
     dropdownElement.innerHTML = "";
-    dropdownElement.addEventListener('change', () => { filterColumnByString(dropdownElement.value, filterColumnIdx) })
+    dropdownElement.addEventListener('change', () => { filterColumnByString(dropdownElement.value, filterColumnIdx) }, false)
     dropdownSet.forEach(item => {
         if (item == null || item == undefined) {
             dropdownElement.innerHTML = `${dropdownElement.innerHTML}<option value="undefined">undefined</option>`;
@@ -125,11 +127,23 @@ function sortTableByColumn(columnIdx) {
 }
 
 function filterColumnByString(filterString, filterColumnIdx) { // this could be rewritten to use the background data instead of just making things invisible
+    console.log(`Filtering Column: ${filterColumnIdx}, by: ${filterString}`);
     let rows = table.tBodies[0].rows;
     for (row of rows) {
         row.style = "";
-        if (filterString != "undefined" && row.cells[filterColumnIdx].textContent != filterString) { // todo make this more than an exact match it also doesnt work when things have spaces?
+        if (!isStringNullOrEmpty(filterColumnByString) && !row.cells[filterColumnIdx].textContent.includes(filterString)) { // todo make this more than an exact match it also doesnt work when things have spaces?
             row.style = "display: none";
         }
     }
+}
+
+function isStringNullOrEmpty(input) {
+    if (input == null
+        || input == undefined
+        || input == "undefinded"
+        || input.length == 0
+    ) {
+        return true;
+    }
+    return false;
 }
