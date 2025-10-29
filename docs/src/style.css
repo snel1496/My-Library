@@ -2,3 +2,13 @@ table-responsive {
     max-height: calc(100vh - 50px);
     max-width: 80%;
 }
+book-page {
+    position: fixed;
+    left: 10vh;
+    top: 10vh;
+    z-index: 1;
+    background: grey;
+    color: #000;
+    padding: 20px;
+    display: block;
+}
