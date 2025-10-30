@@ -9,7 +9,7 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/css/style.css?v=b944cac3f0531ea66a88b750f861d130b213d2de">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./src/style.css">
+    <link rel="stylesheet" href="./src/library-styles.css">
     <script defer src="./src/csv.min.js"></script>
     <script defer src="./src/library.js"></script>
 </head>
@@ -35,13 +35,67 @@
         Series: <select id="series-dropdown" class="custom-select m-2"></select>
         <br />
         Author: <select id="author-dropdown" class="custom-select"></select>
-        <div>
 
+
+    </div>
+    <div class="book-view" id="book-view">
+        <button class="close-btn" type="button"
+            onclick="document.getElementById('book-view').style = 'display: none'"><i class="fa fa-close"></i></button>
+        <div class="bcol bcol-left">
+            <img id="bImage" src="https://covers.openlibrary.org/b/isbn/9780593873359-M.jpg"
+                alt="BookImage if available">
+            <a id="bLink" href="">Open Library Link</a>
+        </div>
+
+        <div class="bcol bcol-right">
+            <div class="row">
+                <div class="col">
+                    <h1 id="bTitle">Example Title</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" id="bSubtitle">Subtitle</div>
+                <div class="col" id="bAuthor">Author</div>
+            </div>
+            <div class="row">
+                <div class="col" id="bSeries">Series</div>
+                <div class="col" id="bVolume">Volume</div>
+            </div>
+            <div class="row">
+                <div class="col" id="bGenre">Genre</div>
+            </div>
+            <div class="row">
+                <div class="col" id="bSummary">This simple Lorem Ipsum generator tool generates Lorem Ipsum according to
+                    the variety of parameters you may wish to set.
+
+                    Lorem Ipsum is essentially placeholder text that is often used by designers to test how their
+                    product will look once
+                    text has been inputted. Ipsum in its current form has been around since the 1960's and today is a
+                    cornerstone of dummy
+                    text for designers.
+
+                    Of course in the age of the web text is often formatted in an array of ways by HTML tags. This tool
+                    allows you to
+                    experiment with a variety of important HTML elements that your web page is most likely to employ;
+                    ones you may have
+                    overlooked. I can't tell you how many sites I have come across which don't use basic styling rules
+                    for elements such as
+                    < em> or < a>, which is just one of many reasons why front-end developers should be using a Lorem
+                            Ipsum generator like
+                            the one above religiously.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" id="bPublishedDate">Published Date</div>
+                <div class="col" id="bDateAdded">Date Added</div>
+            </div>
+            <div class="row">
+                <div class="col" id="bIsbn">Isbn</div>
+            </div>
         </div>
     </div>
-    </div>
-    <div id="library-container" class="m-4 table-responsive">
-        <table id="library" class="table table-hovered table-bordered">
+    <div id="library-container" class="m-5 table-responsive library-table">
+        <table id="library" class="table table-bordered table-striped mb-0">
         </table>
     </div>
 </body>

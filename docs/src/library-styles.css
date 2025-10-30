@@ -1,0 +1,37 @@
+.library-table {
+    max-height: calc(100vh - 100px);
+}
+
+
+.book-view {
+    position: fixed;
+    left: 10vw;
+    top: 10vh;
+    width: 80vw;
+    z-index: 1;
+    padding: 20px;
+    display: block;
+    background-color: white;
+    border: 1ch solid grey;
+    display: none;
+}
+
+
+.bcol {
+    float: left;
+    padding: 10px;
+}
+
+.bcol-left {
+    width: 25%;
+}
+
+.bcol-right {
+    width: 75%;
+}
+
+.close-btn {
+    left: 5px;
+    top: 5px;
+    position: absolute;
+}
