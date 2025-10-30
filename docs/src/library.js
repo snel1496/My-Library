@@ -4,6 +4,8 @@ var seriesDropdown = document.getElementById("series-dropdown");
 var seriesSet = new Set();
 var authorDropdown = document.getElementById("author-dropdown");
 var authorSet = new Set();
+var genreDropdown = document.getElementById("genre-dropdown");
+var genreSet = new Set();
 
 var tableCols = { Title: -1, Subtitle: -1, Series: -1, Volume: -1, Author: -1, 'Date Published': -1, Genre: -1, 'Number of Pages': -1, ISBN: -1, 'Date Added': -1 }
 var additionalCols = { Summary: -1 }
@@ -22,6 +24,7 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
 function onReady() {
     configDropDown(seriesDropdown, seriesSet, tableCols.Series);
     configDropDown(authorDropdown, authorSet, tableCols.Author);
+    configDropDown(genreDropdown, genreSet, tableCols.Genre);
     searchBox.addEventListener('input', () => filterColumnByString(searchBox.value, tableCols.Title));
 }
 
@@ -81,6 +84,9 @@ function configureTable(libraryData) {
                         break;
                     case tableCols.Series:
                         seriesSet.add(libraryData[i][idx]);
+                        break;
+                    case tableCols.Genre:
+                        genreSet.add(libraryData[i][idx]);
                         break;
                     default:
                         break;
