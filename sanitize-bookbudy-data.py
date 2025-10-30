@@ -26,6 +26,8 @@ def main():
     for col in remove_columns:
         library.pop(col)
     
+    library["Date Added"] = pandas.to_datetime(library["Date Added"]).dt.date
+    
     print("Columns after removal", library.columns, "Num Columns", len(library.columns))
     library.to_csv("docs/data/library.csv") # TODO change this to arg?
 
