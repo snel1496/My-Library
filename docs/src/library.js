@@ -22,9 +22,9 @@ fetch("https://raw.githubusercontent.com/snel1496/My-Library/refs/heads/main/doc
 // configure MiniSearch https://github.com/lucaong/minisearch
 //Stuff to do after the data has been parsed and processed
 function onReady() {
-    configDropDown(seriesDropdown, seriesSet, tableCols.Series);
-    configDropDown(authorDropdown, authorSet, tableCols.Author);
-    configDropDown(genreDropdown, genreSet, tableCols.Genre);
+    configDropDown(seriesDropdown, seriesSet, 3);
+    configDropDown(authorDropdown, authorSet, 5);
+    configDropDown(genreDropdown, genreSet, 7);
     searchBox.addEventListener('input', () => filterColumnByString(searchBox.value, tableCols.Title));
 }
 
@@ -161,7 +161,10 @@ function filterColumnByString(filterString, filterColumnIdx) { // this could be 
     let rows = table.tBodies[0].rows;
     for (row of rows) {
         row.style = "";
-        if (!isStringNullOrEmpty(filterColumnByString) && !row.cells[filterColumnIdx].textContent.includes(filterString)) { // todo make this more than an exact match it also doesnt work when things have spaces?
+        if (isStringNullOrEmpty(filterColumnByString)) {
+            continue;
+        }
+        if (!row?.cells[filterColumnIdx]?.textContent.includes(filterString)) { // todo make this more than an exact match it also doesnt work when things have spaces?
             row.style = "display: none";
         }
     }
